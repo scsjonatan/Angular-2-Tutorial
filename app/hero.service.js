@@ -9,25 +9,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var router_deprecated_1 = require('@angular/router-deprecated');
-var hero_service_1 = require('./hero.service');
-var AppComponent = (function () {
-    function AppComponent() {
-        this.title = 'Tour of Heroes';
+var mock_heroes_1 = require('./mock-heroes');
+var HeroService = (function () {
+    function HeroService() {
     }
-    AppComponent = __decorate([
-        core_1.Component({
-            selector: 'my-app',
-            template: "\n    <h1>{{title}}</h1>\n    <a [routerLink]=\"['Heroes']\">Heroes</a>\n    <router-outlet></router-outlet>\n  ",
-            directives: [router_deprecated_1.ROUTER_DIRECTIVES],
-            providers: [
-                router_deprecated_1.ROUTER_PROVIDERS,
-                hero_service_1.HeroService
-            ]
-        }), 
+    HeroService.prototype.getHeroes = function () {
+        return Promise.resolve(mock_heroes_1.HEROES);
+    };
+    // See the "Take it slow" appendix
+    HeroService.prototype.getHeroesSlowly = function () {
+        return new Promise(function (resolve) {
+            return setTimeout(function () { return resolve(mock_heroes_1.HEROES); }, 2000);
+        } // 2 seconds
+         // 2 seconds
+        );
+    };
+    HeroService = __decorate([
+        core_1.Injectable(), 
         __metadata('design:paramtypes', [])
-    ], AppComponent);
-    return AppComponent;
+    ], HeroService);
+    return HeroService;
 }());
-exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map
+exports.HeroService = HeroService;
+//# sourceMappingURL=hero.service.js.map
