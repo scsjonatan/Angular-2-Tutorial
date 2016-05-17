@@ -11,29 +11,30 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var router_deprecated_1 = require('@angular/router-deprecated');
 var hero_service_1 = require('./hero.service');
-var HeroDetailComponent = (function () {
-    function HeroDetailComponent(heroService, routeParams) {
+var DashboardComponent = (function () {
+    function DashboardComponent(router, heroService) {
+        this.router = router;
         this.heroService = heroService;
-        this.routeParams = routeParams;
+        this.heroes = [];
     }
-    HeroDetailComponent.prototype.ngOnInit = function () {
+    DashboardComponent.prototype.ngOnInit = function () {
         var _this = this;
-        var id = +this.routeParams.get('id');
-        this.heroService.getHero(id)
-            .then(function (hero) { return _this.hero = hero; });
+        this.heroService.getHeroes()
+            .then(function (heroes) { return _this.heroes = heroes.slice(1, 5); });
     };
-    HeroDetailComponent.prototype.goBack = function () {
-        window.history.back();
+    DashboardComponent.prototype.gotoDetail = function (hero) {
+        var link = ['HeroDetail', { id: hero.id }];
+        this.router.navigate(link);
     };
-    HeroDetailComponent = __decorate([
+    DashboardComponent = __decorate([
         core_1.Component({
-            selector: 'my-hero-detail',
-            templateUrl: 'app/hero-detail.component.html',
-            styleUrls: ['app/hero-detail.component.css']
+            selector: 'my-dashboard',
+            templateUrl: 'app/dashboard.component.html',
+            styleUrls: ['app/dashboard.component.css']
         }), 
-        __metadata('design:paramtypes', [hero_service_1.HeroService, router_deprecated_1.RouteParams])
-    ], HeroDetailComponent);
-    return HeroDetailComponent;
+        __metadata('design:paramtypes', [router_deprecated_1.Router, hero_service_1.HeroService])
+    ], DashboardComponent);
+    return DashboardComponent;
 }());
-exports.HeroDetailComponent = HeroDetailComponent;
-//# sourceMappingURL=hero-detail.component.js.map
+exports.DashboardComponent = DashboardComponent;
+//# sourceMappingURL=dashboard.component.js.map
